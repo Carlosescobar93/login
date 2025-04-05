@@ -7,7 +7,7 @@ import 'firebase_options.dart';
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyHome());
+  runApp(const MyHome()); 
 }
 
 class MyHome extends StatelessWidget {

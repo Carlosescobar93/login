@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prueba/service/Service.dart';
 
 class RecuperarC extends StatefulWidget {
   const RecuperarC({super.key});
@@ -8,6 +9,9 @@ class RecuperarC extends StatefulWidget {
 }
 
 class _RecuperarCState extends State<RecuperarC> {
+  final TextEditingController correo = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController contrasena = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,20 +21,31 @@ class _RecuperarCState extends State<RecuperarC> {
       ),
       body: Container(
         child: Form(
+          key: _formKey,
           child: Padding(
             padding: EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: correo,
+                  validator: (value) => value!.isEmpty
+                      ? "El correo no puede estar vacio"
+                      : null,
                   autofocus: true,
                   decoration: InputDecoration(
                       label: Text("ingrese su correo electronico"),
                       border: OutlineInputBorder()),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                    onPressed: () {mensaje();},
+                ElevatedButton (
+                    onPressed: ()async{
+                      if (_formKey.currentState!.validate()) {
+                        // Si el formulario es válido, intenta recuperar la contraseña
+                         mensaje(
+                        await Registrar().RecuperarContrasena(correo.text));
+                      }
+                    },
                     child: Text(
                       "Recuperar contraseña",
                       style: TextStyle(color: Colors.black),
@@ -48,12 +63,12 @@ class _RecuperarCState extends State<RecuperarC> {
       ),
     );
   }
-  void mensaje() {
+  void mensaje(msg) {
     showDialog(context: context,
      builder: (BuildContext context){
       return AlertDialog(
         title: Text("Recuperar contraseña"),
-        content: Text("Se ha enviado un codigo de 4 digitos a su correo electronico"),
+        content: Text(msg),
         actions: [
           TextButton(onPressed: () {
             Navigator.pushReplacementNamed(context, "Login");
