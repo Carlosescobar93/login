@@ -28,7 +28,15 @@ class _LoginState extends State<Login> {
                   TextFormField(
                     obscureText: _oculto,
                     decoration: InputDecoration(label: Text("ingrese su contraseña"), border: OutlineInputBorder
-                    ()),
+                    (), suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _oculto = !_oculto;
+                        });
+                      },
+                      icon: Icon(_oculto ? Icons.visibility : Icons.visibility_off),
+                    ),
+                    ),
                     keyboardType: TextInputType.text,
                   ),
                   SizedBox(height: 30,),
