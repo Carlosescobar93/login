@@ -2,6 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Registrar {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<void> cerrarSesion() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print("Error al cerrar sesión: $e");
+    }
+  }
+  Future<String> obtenerUsuarioActual() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        return user.email ?? "No se pudo obtener el correo del usuario";
+      } else {
+        return "No hay usuario autenticado";
+      }
+    } catch (e) {
+      return "Error inesperado: $e"; 
+    }
+  }
   Future<String> iniciarSesion(String email, String contrasena) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(

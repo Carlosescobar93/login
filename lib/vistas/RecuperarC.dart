@@ -28,6 +28,7 @@ class _RecuperarCState extends State<RecuperarC> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: correo,
                   validator: (value) => value!.isEmpty
                       ? "El correo no puede estar vacio"

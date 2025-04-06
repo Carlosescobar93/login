@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:prueba/vistas/vistas.dart';
 
 class Iniciorutas {
@@ -9,6 +10,7 @@ class Iniciorutas {
       'Login': (context) => Login(), 
       'Registro': (context) => Registro(),
       'RecuperarC': (context) => RecuperarC(),
+      'InformacionUser': (context) => InformacionUser(),
     };
   }
 }

@@ -25,7 +25,9 @@ class _RegistroState extends State<Registro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("Registro nuevo usuario")),
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.black),
+      centerTitle: true, 
+      title: Text("Registro nuevo usuario")),
       body: SingleChildScrollView(
         child: Container(
           child: Form(
@@ -209,15 +211,17 @@ class _RegistroState extends State<Registro> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
+                      if( _contrasena.text != _confirmarContrasena.text) {
+                        mensaje("Las contraseñas no coinciden");
+                      }
                       if (_formKey.currentState!.validate()) {
-                        if (_contrasena.text == _confirmarContrasena.text) {
+
                           mensaje(
                             await Registrar().registrarUsuario(
                               _correo.text,
                               _contrasena.text,
                             ),
                           );
-                        }
                       }
                     },
                     child: Text(
@@ -248,7 +252,12 @@ class _RegistroState extends State<Registro> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "Login");
+                if (cosa == "Usuario registrado con éxito") {
+                  Navigator.pushReplacementNamed(context, "Login");
+                } else {
+                  Navigator.pop(context);
+                  
+                }
               },
               child: Text("Aceptar"),
             ),
